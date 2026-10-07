@@ -1,0 +1,20 @@
+Pytanie 1.1: Przekazywanie danych (3 pkt)
+Wyjaśnij różnicę między adnotacjami @PathVariable, @RequestParam oraz @RequestBody. Podaj krótki przykład (np. jak wyglądałby URL lub struktura żądania klienta), kiedy użyłbyś każdej z nich w swoim API.
+@PathVariable: Używasz jej, gdy szukana wartość jest stałym fragmentem adresu internetowego, wskazującym na jeden konkretny element. Przykład: w linku /api/books/5, liczba 5 to właśnie wyłapana zmienna ze ścieżki.
+
+@RequestParam: Służy do dodawania opcjonalnych parametrów
+ (np. do wyszukiwania i filtrowania) na samym końcu adresu, po znaku zapytania.
+  Przykład: w linku /api/books?author=Tolkien, słowo Tolkien to nasz przekazany parametr.
+
+@RequestBody: Wyłapuje większe paczki danych (np. cały formularz książki), które użytkownik wysyła "w tle" (najczęściej jako tekst JSON),
+ a nie w samym adresie URL.
+ Przykład: podczas dodawania książki, klient wysyła w ciele żądania niewidoczny w linku tekst {"title": "Hobbit", "author": "Tolkien"}.
+
+
+Pytanie 1.2: Kody statusów w Springu (2 pkt)
+Załóżmy, że klient wysyła żądanie POST /api/books w celu dodania nowej książki. Domyślnie poprawnie wykonana metoda kontrolera w Springu zwróci status 200 OK. Dlaczego z punktu widzenia czystego REST API jest to nieprecyzyjne? Jakiej adnotacji lub klasy w Springu użyjesz, aby zwrócić w tej sytuacji poprawny kod, i jaki to będzie kod HTTP?
+Status 200 oznacza jedynie ogólne "wszystko poszło dobrze",
+ podczas gdy standardy REST wymagają zwrócenia precyzyjnego kodu 201 Created,
+  który jasno mówi: "sukces, poprawnie utworzyłem nowy element".
+   Aby to naprawić, wystarczy dodać nad metodą adnotację @ResponseStatus(HttpStatus.CREATED) lub użyć specjalnej klasy ResponseEntity,
+    by ręcznie zbudować odpowiedź z takim statusem.
